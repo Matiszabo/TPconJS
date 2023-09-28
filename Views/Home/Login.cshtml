@@ -1,0 +1,24 @@
+@{
+    ViewData["Title"] = "Login";
+}
+
+@model log.Models.Login
+
+<h2>Iniciar Sesión</h2>
+
+<form asp-controller="Home" asp-action="GuardarAlumno" method="post">
+    <div class="form-group">
+        <label for="Usuario">Usuario:</label>
+        <input type="text" class="form-control" id="Usuario" name="Usuario" required>
+    </div>
+    <div class="form-group">
+        <label for="Contraseña">Contraseña:</label>
+        <input type="password" class="form-control" id="Contraseña" name="Contraseña" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+</form>
+
+<div class="mt-3">
+    <p>¿Olvidaste tu contraseña? <a asp-controller="Home" asp-action="OlvidarContraseña">Recuperarla aquí</a></p>
+    <p>¿No tienes cuenta? <a asp-controller="Home" asp-action="Registro">Regístrate</a></p>
+</div>

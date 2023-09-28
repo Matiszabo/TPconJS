@@ -1,0 +1,17 @@
+@{
+    ViewData["Title"] = "Login";
+}
+
+@model log.Models.Login
+
+<h2>Bienvenido, @Model.Nombre</h2>
+
+<p>Tus datos:</p>
+<ul>
+    <li>Usuario: @Model.Usuario</li>
+    <li>Nombre: @Model.Nombre</li>
+    <li>Email: @Model.Email</li>
+    <li>Teléfono: @Model.Telefono</li>
+</ul>
+
+<a asp-controller="Home" asp-action="CerrarSesion" class="btn btn-danger">Cerrar Sesión</a>

@@ -1,0 +1,31 @@
+@{
+    ViewData["Title"] = "Registrarse";
+}
+
+@model log.Models.Login
+
+<h2>Registro de Usuario</h2>
+
+<form asp-controller="Home" asp-action="GuardarAlumno" method="post">
+    <div class="form-group">
+        <label for="Usuario">Usuario:</label>
+        <input type="text" class="form-control" id="Usuario" name="Usuario" required>
+    </div>
+    <div class="form-group">
+        <label for="Contraseña">Contraseña:</label>
+        <input type="password" class="form-control" id="Contraseña" name="Contraseña" required>
+    </div>
+    <div class="form-group">
+        <label for="Nombre">Nombre:</label>
+        <input type="text" class="form-control" id="Nombre" name="Nombre">
+    </div>
+    <div class="form-group">
+        <label for="Email">Email:</label>
+        <input type="email" class="form-control" id="Email" name="Email">
+    </div>
+    <div class="form-group">
+        <label for="Telefono">Teléfono:</label>
+        <input type="text" class="form-control" id="Telefono" name="Telefono">
+    </div>
+    <button type="submit" class="btn btn-primary">Registrar</button>
+</form>
