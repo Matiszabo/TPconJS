@@ -39,6 +39,7 @@ public class HomeController : Controller
             else
             {
                 Login comparar = BD.LoginIngresado(us.id);
+                //ACA HAY UN ERROR, REVISAR CON EL CHAT GPT O EL PROFE
                 if(us.Contraseña == comparar.Contraseña)
                 {
                     return RedirectToAction("Bienvenida");
