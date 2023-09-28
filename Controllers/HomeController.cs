@@ -27,7 +27,7 @@ public class HomeController : Controller
 
     public IActionResult Login()
     {
-        return Login();
+        return View();
     }
        public IActionResult VerificarContraseña(Login us)
         {
