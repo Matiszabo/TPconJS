@@ -25,6 +25,10 @@ public class HomeController : Controller
         return View();
     }
 
+    public IActionResult Login()
+    {
+        return Login();
+    }
        public IActionResult VerificarContraseña(Login us)
         {
             if (string.IsNullOrEmpty(us.Contraseña))
