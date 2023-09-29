@@ -36,7 +36,6 @@ namespace PrimerProyecto.Models
             pNombre = user.Nombre,
             pEmail = user.Email,
             pTelefono = user.Telefono
-
         });
     }
     }

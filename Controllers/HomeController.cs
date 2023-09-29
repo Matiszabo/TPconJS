@@ -39,16 +39,28 @@ public class HomeController : Controller
             else
             {
                 Login comparar = BD.LoginIngresado(us.id);
-                //ACA HAY UN ERROR, REVISAR CON EL CHAT GPT O EL PROFE
-                if(us.Contraseña == comparar.Contraseña)
-                {
-                    return RedirectToAction("Bienvenida");
-                }
-                else 
-                {
-                    ViewBag.Verificar = "La contraseña ingresada es incorrecta";
-                }
-                return RedirectToAction("Postlogin");
+// Console.WriteLine(us.Contraseña);
+Console.WriteLine(comparar.Contraseña);
+
+if (comparar != null)
+{
+    if (us.Contraseña == comparar.Contraseña)
+    {
+        return RedirectToAction("Bienvenida");
+    }
+    else
+    {
+        ViewBag.Verificar = "La contraseña ingresada es incorrecta";
+        return RedirectToAction("index");
+    }
+}
+else
+{
+    // Handle the case where no matching record was found
+    ViewBag.Verificar = "No se encontró un usuario con ese ID";
+}
+
+return RedirectToAction("index");
             }
 }
    public IActionResult GuardarUsuario(Login nuevoUser)
