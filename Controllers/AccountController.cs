@@ -52,12 +52,12 @@ public class AccountController : Controller
             return View("Login");
         }
     }
-      public IActionResult GuardarUsuario(Login nuevoUser)
+      public IActionResult GuardarUsuario(Login nuevoUser, string ContraseñaNueva)
     {
-        if (string.IsNullOrEmpty(nuevoUser.Usuario) || string.IsNullOrEmpty(nuevoUser.Contraseña) || string.IsNullOrEmpty(nuevoUser.Nombre) || string.IsNullOrEmpty(nuevoUser.Email) ||string.IsNullOrEmpty(nuevoUser.Telefono) )
+        if (nuevoUser.Contraseña!= ContraseñaNueva || string.IsNullOrEmpty(nuevoUser.Usuario) ||  string.IsNullOrEmpty(nuevoUser.Contraseña) || string.IsNullOrEmpty(nuevoUser.Nombre) || string.IsNullOrEmpty(nuevoUser.Email) ||string.IsNullOrEmpty(nuevoUser.Telefono) )
         {
-            ViewBag.Error = "Se deben completar todos los campos";
-            return RedirectToAction("Registro");
+            string alerta="No se compltaron todos los datos o las contraseñas ingresadas no coinciden";
+            return RedirectToAction("Registro" , "Account", new {error=alerta});
         }
         else
         {
@@ -70,8 +70,9 @@ public class AccountController : Controller
         BD.ActualizarContraseña(Usuario, NuevaContraseña);
         return RedirectToAction ("Login");
     }
-    public IActionResult Registro()
+    public IActionResult Registro(string error)
     {
+        ViewBag.Error=error;
         return View();
     }
 
