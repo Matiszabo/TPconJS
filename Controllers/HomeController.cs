@@ -29,53 +29,67 @@ public class HomeController : Controller
     {
         return View();
     }
-       public IActionResult VerificarContraseña(Login us)
+
+
+    public IActionResult VerificarContraseña(string Usuario, string Contraseña)
+    {
+        if (string.IsNullOrEmpty(Contraseña)  || string.IsNullOrEmpty(Usuario) )
         {
-            if (string.IsNullOrEmpty(us.Contraseña))
+            ViewBag.Error = "Se deben completar todos los campos";
+            return RedirectToAction("Account");
+        }
+        else
+        {
+            Login comparar = BD.LoginIngresado(Usuario, Contraseña);
+        
+            if (comparar != null)
             {
-                ViewBag.Error = "Se deben completar todos los campos";
-                return RedirectToAction("Account");
+                if (Contraseña == comparar.Contraseña)
+                {
+                    return RedirectToAction("Bienvenida", "Home", new {id=comparar.id});
+                }
             }
             else
             {
-                Login comparar = BD.LoginIngresado(us.id);
-// Console.WriteLine(us.Contraseña);
-Console.WriteLine(comparar.Contraseña);
-
-if (comparar != null)
-{
-    if (us.Contraseña == comparar.Contraseña)
-    {
-        return RedirectToAction("Bienvenida");
-    }
-    else
-    {
-        ViewBag.Verificar = "La contraseña ingresada es incorrecta";
-        return RedirectToAction("index");
-    }
-}
-else
-{
-    // Handle the case where no matching record was found
-    ViewBag.Verificar = "No se encontró un usuario con ese ID";
-}
-
-return RedirectToAction("index");
+                ViewBag.Verificar = "El usuario y/o contraseña ingresada son incorrectos";
             }
-}
-   public IActionResult GuardarUsuario(Login nuevoUser)
+
+            return View("Login");
+        }
+    }
+    public IActionResult GuardarUsuario(Login nuevoUser)
+    {
+        if (string.IsNullOrEmpty(nuevoUser.Usuario) || string.IsNullOrEmpty(nuevoUser.Contraseña) || string.IsNullOrEmpty(nuevoUser.Nombre) || string.IsNullOrEmpty(nuevoUser.Email) ||string.IsNullOrEmpty(nuevoUser.Telefono) )
         {
-            if (string.IsNullOrEmpty(nuevoUser.Usuario) || string.IsNullOrEmpty(nuevoUser.Contraseña) || string.IsNullOrEmpty(nuevoUser.Nombre) || string.IsNullOrEmpty(nuevoUser.Email) ||string.IsNullOrEmpty(nuevoUser.Telefono) )
-            {
-                ViewBag.Error = "Se deben completar todos los campos";
-                return RedirectToAction("Registro");
-            }
-            else
-            {
-                BD.InsertUser(nuevoUser);
-                return RedirectToAction("index");
-            }
-}
+            ViewBag.Error = "Se deben completar todos los campos";
+            return RedirectToAction("Registro");
+        }
+        else
+        {
+            BD.InsertUser(nuevoUser);
+            return RedirectToAction("Login");
+        }
+    }
+
+    public IActionResult Registro()
+    {
+        return View();
+    }
+
+    public IActionResult Bienvenida(int id)
+    {
+        Login Model=BD.ListarPorId(id);
+        ViewBag.Usuario=Model.Usuario;
+        ViewBag.Nombre=Model.Nombre;
+        ViewBag.Email=Model.Email;
+        ViewBag.Telefono=Model.Telefono;
+        return View();
+    }
+    
+    public IActionResult CerrarSesion()
+    {
+        return RedirectToAction("Index");
+    }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

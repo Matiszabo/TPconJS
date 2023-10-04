@@ -11,7 +11,17 @@ namespace PrimerProyecto.Models
     {
         private static string _connectionString = @"Server=localhost;DataBase=Login+Registro;Trusted_Connection=True;";
         
-       public static Login LoginIngresado(int id)
+       public static Login LoginIngresado(string Usuario, string Contraseña)
+    {
+        Login Ingresado = new Login();
+        using (SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string SQL = "SELECT * FROM Usuario WHERE Usuario= @pUsuario and Contraseña= @pContraseña";
+            Ingresado = db.QueryFirstOrDefault<Login>(SQL, new { pUsuario= Usuario , pContraseña = Contraseña });
+        }
+        return Ingresado;
+    }
+       public static Login ListarPorId(int id)
     {
         Login Ingresado = new Login();
         using (SqlConnection db = new SqlConnection(_connectionString))
@@ -21,7 +31,6 @@ namespace PrimerProyecto.Models
         }
         return Ingresado;
     }
-
     public static void InsertUser(Login user)
 {
     string SQL = "INSERT INTO Usuario(Usuario, Contraseña, Nombre, Email, Telefono)";
