@@ -48,5 +48,18 @@ namespace PrimerProyecto.Models
         });
     }
     }
+    public static void ActualizarContraseña(string Usuario, string NuevaContraseña)
+{
+    string SQL = "Update Usuario Set Contraseña = @pNuevaContraseña where Usuario=@pNuevoUsuario";
+
+    using (SqlConnection db = new SqlConnection(_connectionString))
+    {
+        db.Execute(SQL, new
+        {
+            pNuevaContraseña = NuevaContraseña,
+            pNuevoUsuario = Usuario
+        });
+    }
+    }
     }
     }
